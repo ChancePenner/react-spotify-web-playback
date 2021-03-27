@@ -85,8 +85,11 @@ export default class Volume extends React.PureComponent<Props, State> {
 
   private handleChangeSlider = ({ y }: RangeSliderPosition) => {
     const { setVolume } = this.props;
-    const volume = Math.round(y) / 100;
-
+    var volume = Math.round(y) / 100;
+    if(volume === 0)
+    {
+      volume = parseFloat(volume.toPrecision(2));
+    }
     clearTimeout(this.timeout);
 
     this.timeout = window.setTimeout(() => {
@@ -103,14 +106,14 @@ export default class Volume extends React.PureComponent<Props, State> {
   };
 
   public render() {
+    const zero = 0;
     const { isOpen, volume } = this.state;
     const {
       playerPosition,
       styles: { altColor, bgColor, color },
     } = this.props;
     let icon = <VolumeHigh />;
-
-    if (volume === 0) {
+    if (volume === parseFloat(zero.toPrecision(2) ) {
       icon = <VolumeMute />;
     } else if (volume <= 0.5) {
       icon = <VolumeLow />;
